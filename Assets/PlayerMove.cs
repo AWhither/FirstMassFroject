@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
     protected Rigidbody2D _rb;
     protected Collider2D _collider;
+    protected Animator _anim;
 
     public Transform _camera;
 
@@ -25,6 +26,7 @@ public class PlayerMove : MonoBehaviour
         _rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         _collider = _rb.GetComponent<Collider2D>();
+        _anim = _rb.GetComponent<Animator>();
     }
     private void FixedUpdate()
     {
@@ -54,7 +56,7 @@ public class PlayerMove : MonoBehaviour
         if (Physics2D.IsTouchingLayers(_collider, LayerMask.GetMask("Finish")))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+        } 
     }
     void Flip()
     {
