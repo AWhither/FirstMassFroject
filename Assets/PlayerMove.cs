@@ -9,8 +9,6 @@ public class PlayerMove : MonoBehaviour
     protected Collider2D _collider;
     protected Animator _anim;
 
-    public Transform _camera;
-
     public float playerSpeed;
     public float jumpForce;
     protected bool facingRight = true;
@@ -24,7 +22,6 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         _rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
-        _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         _collider = _rb.GetComponent<Collider2D>();
         _anim = _rb.GetComponent<Animator>();
     }
@@ -32,7 +29,6 @@ public class PlayerMove : MonoBehaviour
     {
         //        _rb.velocity = new Vector2(playerSpeed, _rb.velocity.y);
         _rb.velocity = new Vector2(Input.GetAxis("Horizontal") * playerSpeed, _rb.velocity.y);
-        _camera.localPosition = new Vector3(_rb.position.x, _rb.position.y, -20);
         if ((Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && Physics2D.IsTouchingLayers(_collider, LayerMask.GetMask("Ground")) && touchedGround)
         {
             _rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
