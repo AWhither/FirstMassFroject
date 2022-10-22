@@ -99,4 +99,10 @@ public class PlayerMove : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    //restart button in menu
+    public void RestartB()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
