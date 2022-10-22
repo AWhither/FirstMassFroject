@@ -9,4 +9,10 @@ public class PlayButton : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    public void exitB()
+    {
+        Application.Quit();
+        Debug.Log("game closed");
+    }
 }

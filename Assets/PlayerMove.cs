@@ -9,11 +9,15 @@ public class PlayerMove : MonoBehaviour
     protected Collider2D _collider;
     protected Animator _anim;
 
+    protected Transform _cam;
+
     public float playerSpeed;
     public float jumpForce;
     protected bool facingRight = true;
 
     protected bool touchedGround;
+
+    public GameObject _menu;
 
     IEnumerator falledCd()
     {
@@ -24,12 +28,16 @@ public class PlayerMove : MonoBehaviour
         _rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         _collider = _rb.GetComponent<Collider2D>();
         _anim = _rb.GetComponent<Animator>();
+        _menu = GameObject.FindGameObjectWithTag("Menu");
+        _menu.SetActive(false);
     }
     private void FixedUpdate()
     {
-        //        _rb.velocity = new Vector2(playerSpeed, _rb.velocity.y);
-        _rb.velocity = new Vector2(Input.GetAxis("Horizontal") * playerSpeed, _rb.velocity.y);
-        if ((Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && Physics2D.IsTouchingLayers(_collider, LayerMask.GetMask("Ground")) && touchedGround)
+        if (!_menu.activeSelf)
+        {
+            _rb.velocity = new Vector2(Input.GetAxis("Horizontal") * playerSpeed, _rb.velocity.y);
+        }
+        if ((Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && Physics2D.IsTouchingLayers(_collider, LayerMask.GetMask("Ground")) && touchedGround && !_menu.activeSelf)
         {
             _rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             touchedGround = false;
@@ -52,7 +60,9 @@ public class PlayerMove : MonoBehaviour
         if (Physics2D.IsTouchingLayers(_collider, LayerMask.GetMask("Finish")))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        } 
+        }
+
+
     }
     void Flip()
     {
@@ -64,13 +74,29 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (!facingRight && Input.GetAxis("Horizontal") > 0)
+        if (!facingRight && Input.GetAxis("Horizontal") > 0 && !_menu.activeSelf)
         {
             Flip();
         }
-        else if (facingRight && Input.GetAxis("Horizontal") < 0)
+        else if (facingRight && Input.GetAxis("Horizontal") < 0 && !_menu.activeSelf)
         {
             Flip();
         }
+
+        //menu
+        if (!_menu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            _menu.SetActive(true);
+        }
+        else if (_menu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        {
+            _menu.SetActive(false);
+        }
+    }
+
+    //Exit button in menu
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
