@@ -16,8 +16,7 @@ public class PlayerMove : MonoBehaviour
     protected bool facingRight = true;
 
     protected bool touchedGround;
-
-    public GameObject _menu;
+    GameObject _menu;
 
     IEnumerator falledCd()
     {
@@ -29,7 +28,6 @@ public class PlayerMove : MonoBehaviour
         _collider = _rb.GetComponent<Collider2D>();
         _anim = _rb.GetComponent<Animator>();
         _menu = GameObject.FindGameObjectWithTag("Menu");
-        _menu.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -83,26 +81,8 @@ public class PlayerMove : MonoBehaviour
             Flip();
         }
 
-        //menu
-        if (!_menu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
-        {
-            _menu.SetActive(true);
-        }
-        else if (_menu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
-        {
-            _menu.SetActive(false);
-        }
+        
     }
 
-    //Exit button in menu
-    public void ExitToMainMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
 
-    //restart button in menu
-    public void RestartB()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 }
