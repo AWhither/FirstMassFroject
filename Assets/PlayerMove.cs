@@ -84,5 +84,13 @@ public class PlayerMove : MonoBehaviour
         
     }
 
+<<<<<<< HEAD
 
+=======
+    //Exit button in menu
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+>>>>>>> parent of add5df2 (+restart button in pause menu)
 }
